@@ -212,15 +212,6 @@
   .section-head p{color:var(--gray);font-size:1.1rem;}
 
   /* Logos strip */
-  .logos-strip{padding:50px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
-  .logos-strip p{text-align:center;color:var(--gray);margin-bottom:30px;font-size:.9rem;text-transform:uppercase;letter-spacing:2px;}
-  .logos{display:flex;justify-content:center;gap:50px;flex-wrap:wrap;align-items:center;}
-  .logos .l-item{
-    font-weight:700;font-size:1.3rem;opacity:.6;transition:opacity .3s;
-    display:flex;align-items:center;gap:8px;
-  }
-  .logos .l-item:hover{opacity:1;}
-
   /* Features grid */
   .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;}
   .feature-card{
@@ -261,6 +252,7 @@
     box-shadow:0 30px 80px rgba(0,0,0,0.4);position:relative;overflow:hidden;
   }
   .module-visual .mv-glow{position:absolute;width:200px;height:200px;border-radius:50%;background:var(--primary);filter:blur(80px);opacity:.3;top:-50px;right:-50px;}
+  .module-visual .mv-img{width:100%;height:auto;display:block;border-radius:0;}
   .mv-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;position:relative;}
   .mv-header h4{font-size:1.1rem;}
   .mv-header .mv-pill{background:var(--card);border:1px solid var(--border);padding:6px 14px;border-radius:50px;font-size:.75rem;color:var(--accent);}
@@ -301,34 +293,39 @@
   .platform-icons div{display:flex;flex-direction:column;align-items:center;gap:8px;color:#fff;font-weight:600;}
   .platform-icons .pi-icon{font-size:2.5rem;}
 
+  /* App Showcase (replaces old platform-banner content) */
+  .app-showcase{text-align:center;}
+  .app-showcase .app-text{margin-bottom:40px;}
+  .app-showcase .app-text h2{font-size:2.4rem;margin-bottom:16px;color:#fff;}
+  .app-showcase .app-text p{color:rgba(255,255,255,0.9);font-size:1.1rem;line-height:1.7;max-width:700px;margin:0 auto;}
+  .app-showcase .app-text .tagline{display:inline-block;background:rgba(255,255,255,0.15);padding:6px 18px;border-radius:50px;font-size:.8rem;font-weight:600;margin-bottom:20px;color:#fff;letter-spacing:.5px;}
+  .app-showcase .app-image .img-wrap{position:relative;width:100%;border-radius:16px;overflow:hidden;}
+  .app-showcase .app-image img{width:100%;height:auto;display:block;border-radius:0;box-shadow:0 25px 70px rgba(0,0,0,0.4);}
+  .app-showcase .app-image .img-wrap::after{content:'';position:absolute;inset:0;border-radius:16px;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.1);pointer-events:none;}
+
   /* Stats */
   .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;text-align:center;}
   .stat-big .num{font-size:3rem;font-family:'Sora';font-weight:800;}
   .stat-big .desc{color:var(--gray);margin-top:6px;}
 
-  /* Pricing */
-  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
-  .price-card{
-    background:var(--card);border:1px solid var(--border);border-radius:24px;
-    padding:40px 32px;transition:all .4s;position:relative;
+  /* Contact Sales (replaces old pricing) */
+  .contact-sales{max-width:900px;margin:0 auto;}
+  .contact-sales .cs-card{
+    background:var(--card);border:1px solid var(--border);border-radius:20px;
+    padding:36px 32px;display:flex;flex-direction:column;gap:12px;margin-bottom:20px;
+    transition:all .4s;
   }
-  .price-card.featured{
-    background:var(--featured-bg);
-    border-color:var(--primary);transform:scale(1.05);
+  .contact-sales .cs-card:hover{transform:translateY(-4px);border-color:var(--accent);}
+  .contact-sales .cs-icon{font-size:2.2rem;}
+  .contact-sales .cs-card h3{font-size:1.3rem;}
+  .contact-sales .cs-card p{color:var(--gray);font-size:.98rem;line-height:1.6;}
+  .contact-sales .cs-cta{
+    background:var(--gradient);border-radius:20px;padding:50px 40px;
+    text-align:center;margin-top:12px;
   }
-  .price-card:hover{transform:translateY(-8px);}
-  .price-card.featured:hover{transform:scale(1.05) translateY(-8px);}
-  .price-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);
-    background:var(--gradient);padding:6px 20px;border-radius:50px;font-size:.8rem;font-weight:600;}
-  .price-card h3{font-size:1.4rem;margin-bottom:8px;}
-  .price-card .p-desc{color:var(--gray);font-size:.9rem;margin-bottom:24px;}
-  .price-card .price{font-size:3rem;font-family:'Sora';font-weight:800;margin-bottom:4px;}
-  .price-card .price small{font-size:1rem;color:var(--gray);font-weight:400;}
-  .price-card .p-period{color:var(--gray);font-size:.85rem;margin-bottom:28px;}
-  .price-card ul{list-style:none;margin-bottom:32px;display:flex;flex-direction:column;gap:14px;}
-  .price-card ul li{display:flex;gap:10px;color:var(--gray);font-size:.95rem;}
-  .price-card ul li .c{color:var(--accent);}
-  .price-card .btn{width:100%;text-align:center;}
+  .contact-sales .cs-cta p{color:#fff;font-size:1.2rem;margin-bottom:28px;line-height:1.6;}
+  .contact-sales .cs-cta .btn{background:#fff;color:var(--primary);box-shadow:0 8px 30px rgba(0,0,0,0.3);}
+  .contact-sales .cs-cta .btn:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.4);}
 
   /* Testimonials */
   .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
@@ -390,12 +387,11 @@
     .pie-chart{width:160px;height:160px;}
     .pie-center::after{width:90px;height:90px;}
     .stats-row{grid-template-columns:repeat(2,1fr);gap:30px 16px;}
-    .pricing-grid{grid-template-columns:1fr;}
-    .price-card.featured{transform:scale(1);}
-    .price-card.featured:hover{transform:translateY(-8px);}
     .testi-grid{grid-template-columns:1fr;}
     .footer-grid{grid-template-columns:1fr 1fr;}
     .platform-banner{padding:40px 24px;}
+    .app-showcase .app-text h2{font-size:1.8rem;}
+    .app-showcase .app-text{margin-bottom:24px;}
     .bg-glow{display:none;}
   }
 </style>
@@ -422,7 +418,7 @@
         <a href="#modulos">Módulos</a>
         <a href="#integracoes">Integrações</a>
         <a href="#precos">Planos</a>
-        <a href="#contato" class="btn btn-primary">Teste Grátis</a>
+        <a href="#contato" class="btn btn-primary">Começar Agora</a>
       </div>
       <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">🌙</button>
       <button class="menu-toggle" id="menuToggle">☰</button>
@@ -481,20 +477,7 @@
   </div>
 </section>
 
-<!-- LOGOS STRIP -->
-<div class="logos-strip">
-  <div class="container">
-    <p>Integrado com as maiores plataformas do mercado</p>
-    <div class="logos">
-      <div class="l-item">🍔 iFood</div>
-      <div class="l-item">🚗 UberEats</div>
-      <div class="l-item">🛵 99Food</div>
-      <div class="l-item">📦 Mercado Livre</div>
-      <div class="l-item">🛒 Shopee</div>
-      <div class="l-item">💳 Stone</div>
-    </div>
-  </div>
-</div>
+
 
 <!-- RECURSOS -->
 <section id="recursos">
@@ -550,27 +533,20 @@
 
     <div class="modules">
       <!-- Módulo 1 -->
-      <div class="module-row reveal">
-        <div class="module-text">
+      <div class="module-row reveal" style="grid-template-columns:1fr;">
+        <div class="module-text" style="max-width:700px;margin:0 auto;text-align:center;">
           <span class="m-tag">PDV & Vendas</span>
           <h3>Venda mais, com menos esforço</h3>
-          <p>Um ponto de venda completo, rápido e que funciona até offline. Aceite todas as formas de pagamento e fidelize seus clientes.</p>
-          <ul>
+          <p>Um ponto de venda completo e rápido. Aceite todas as formas de pagamento e fidelize seus clientes.</p>
+          <ul style="display:inline-flex;flex-wrap:wrap;gap:14px 28px;justify-content:center;text-align:left;">
             <li><span class="check">✓</span> Frente de caixa ágil e moderna</li>
             <li><span class="check">✓</span> Emissão de NFC-e e NF-e automática</li>
             <li><span class="check">✓</span> Pix, cartão, dinheiro e carteira digital</li>
             <li><span class="check">✓</span> Programa de fidelidade integrado</li>
           </ul>
         </div>
-        <div class="module-visual">
-          <div class="mv-glow"></div>
-          <div class="mv-header"><h4>Caixa #1 — Aberto</h4><span class="mv-pill">● Online</span></div>
-          <div class="mv-list">
-            <div class="mv-item"><span class="mv-name">🥤 Refrigerante 2L</span><span class="mv-val">R$ 9,90</span></div>
-            <div class="mv-item"><span class="mv-name">🍕 Pizza Grande</span><span class="mv-val">R$ 49,90</span></div>
-            <div class="mv-item"><span class="mv-name">🍟 Porção Batata</span><span class="mv-val">R$ 24,90</span></div>
-            <div class="mv-item" style="border-color:var(--accent)"><span class="mv-name"><strong>TOTAL</strong></span><span class="mv-val green">R$ 84,70</span></div>
-          </div>
+        <div class="module-visual" style="padding:0;">
+          <img src="kora02.png" alt="PDV Kora - Vendas no varejo" class="mv-img">
         </div>
       </div>
 
@@ -646,19 +622,21 @@
   </div>
 </section>
 
-<!-- PLATFORM BANNER -->
+<!-- APP SHOWCASE (Controle Total) -->
 <section>
   <div class="container">
     <div class="platform-banner reveal">
-      <h2>Funciona em qualquer lugar, em qualquer dispositivo</h2>
-      <p>100% online e na nuvem. Acesse pelo computador, tablet ou celular. Compatível com Windows, macOS, Linux, Android e iOS.</p>
-      <div class="platform-icons">
-        <div><span class="pi-icon"><svg viewBox="0 0 24 24" width="48" height="48" fill="#00A4EF"><path d="M0 0h11.4v11.4H0V0zm12.6 0H24v11.4H12.6V0zM0 12.6h11.4V24H0V12.6zm12.6 0H24V24H12.6V12.6z"/></svg></span> Windows</div>
-        <div><span class="pi-icon"><svg viewBox="0 0 24 24" width="48" height="48" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.3.74 3.09.8 1.2-.24 2.35-.74 3.6-.66 1.52.12 2.66.76 3.42 1.92-3.13 1.87-2.63 5.98.53 7.14-.63 1.63-1.55 3.25-2.64 3.77zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg></span> macOS</div>
-        <div><span class="pi-icon">🐧</span> Linux</div>
-        <div><span class="pi-icon"><svg viewBox="0 0 24 24" width="48" height="48" fill="#3DDC84"><path d="M6 18c0 .55.45 1 1 1h1v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h2v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h1c.55 0 1-.45 1-1V8H6v10zm-2.5-9.5C2.67 8.5 2 9.17 2 10v5c0 .83.67 1.5 1.5 1.5S5 15.83 5 15v-5c0-.83-.67-1.5-1.5-1.5zm17 0c-.83 0-1.5.67-1.5 1.5v5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-5c0-.83-.67-1.5-1.5-1.5zM13 2.24l1.88-1.88c.2-.2.2-.51 0-.71-.2-.2-.51-.2-.71 0L12 1.76 9.82-.41c-.2-.2-.51-.2-.71 0-.2.2-.2.51 0 .71L11 2.24V4h2V2.24zM15 5H9c-1.1 0-2 .9-2 2h10c0-1.1-.9-2-2-2z"/></svg></span> Android</div>
-        <div><span class="pi-icon"><svg viewBox="0 0 24 24" width="48" height="48" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.3.74 3.09.8 1.2-.24 2.35-.74 3.6-.66 1.52.12 2.66.76 3.42 1.92-3.13 1.87-2.63 5.98.53 7.14-.63 1.63-1.55 3.25-2.64 3.77zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg></span> iOS</div>
-        <div><span class="pi-icon">🌐</span> Navegador</div>
+      <div class="app-showcase">
+        <div class="app-text">
+          <span class="tagline">📱 App Kora</span>
+          <h2>Tenha o controle total do seu negócio<br>na palma da sua mão</h2>
+          <p>Em tempo real, 24 horas por dia / 7 dias por semana. Acompanhe vendas, finanças, estoque e muito mais direto do seu celular, onde quer que você esteja.</p>
+        </div>
+        <div class="app-image">
+          <div class="img-wrap">
+            <img src="kora01.png" alt="App Kora - Controle total do negócio na palma da mão">
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -676,61 +654,33 @@
   </div>
 </section>
 
-<!-- PREÇOS -->
+<!-- PREÇOS / CONTATO -->
 <section id="precos">
   <div class="container">
     <div class="section-head reveal">
-      <span class="tag">Planos</span>
-      <h2>Escolha o plano ideal<br>para o seu momento</h2>
-      <p>Sem fidelidade. Cancele quando quiser. Comece com 7 dias grátis.</p>
+      <span class="tag">Sob Medida</span>
+      <h2>Solução personalizada<br>para o seu negócio</h2>
+      <p>Cada empresa tem sua história, seus desafios e seu ritmo de crescimento.</p>
     </div>
-    <div class="pricing-grid">
-      <div class="price-card reveal">
-        <h3>Essencial</h3>
-        <p class="p-desc">Para quem está começando</p>
-        <div class="price">R$ 89<small>/mês</small></div>
-        <p class="p-period">cobrado mensalmente</p>
-        <ul>
-          <li><span class="c">✓</span> PDV / Frente de Caixa</li>
-          <li><span class="c">✓</span> Controle de estoque</li>
-          <li><span class="c">✓</span> Fluxo de caixa básico</li>
-          <li><span class="c">✓</span> 1 usuário</li>
-          <li><span class="c">✓</span> Suporte por e-mail</li>
-        </ul>
-        <a href="#contato" class="btn btn-outline">Começar Grátis</a>
+    <div class="contact-sales reveal">
+      <div class="cs-card">
+        <div class="cs-icon">🎯</div>
+        <h3>Condições especiais</h3>
+        <p>Planos ajustados à realidade da sua operação, com benefícios exclusivos para quem fecha agora.</p>
       </div>
-
-      <div class="price-card featured reveal">
-        <div class="price-badge">⭐ Mais Popular</div>
-        <h3>Profissional</h3>
-        <p class="p-desc">Para negócios em crescimento</p>
-        <div class="price">R$ 189<small>/mês</small></div>
-        <p class="p-period">cobrado mensalmente</p>
-        <ul>
-          <li><span class="c">✓</span> Tudo do Essencial</li>
-          <li><span class="c">✓</span> Integração iFood, UberEats e 99Food</li>
-          <li><span class="c">✓</span> Controle financeiro completo</li>
-          <li><span class="c">✓</span> Business Intelligence (BI)</li>
-          <li><span class="c">✓</span> Até 5 usuários</li>
-          <li><span class="c">✓</span> Suporte prioritário</li>
-        </ul>
-        <a href="#contato" class="btn btn-primary">Começar Grátis</a>
+      <div class="cs-card">
+        <div class="cs-icon">🚀</div>
+        <h3>Onboarding dedicado</h3>
+        <p>Nossa equipe acompanha cada etapa da implantação para você extrair o máximo da Kora desde o primeiro dia.</p>
       </div>
-
-      <div class="price-card reveal">
-        <h3>Enterprise</h3>
-        <p class="p-desc">Para grandes operações</p>
-        <div class="price">R$ 389<small>/mês</small></div>
-        <p class="p-period">cobrado mensalmente</p>
-        <ul>
-          <li><span class="c">✓</span> Tudo do Profissional</li>
-          <li><span class="c">✓</span> Integrações ilimitadas</li>
-          <li><span class="c">✓</span> Multi-lojas / filiais</li>
-          <li><span class="c">✓</span> BI avançado com IA</li>
-          <li><span class="c">✓</span> Usuários ilimitados</li>
-          <li><span class="c">✓</span> Gerente de conta dedicado</li>
-        </ul>
-        <a href="#contato" class="btn btn-outline">Falar com Vendas</a>
+      <div class="cs-card">
+        <div class="cs-icon">🔒</div>
+        <h3>Sem surpresas</h3>
+        <p>Sem fidelidade, sem taxas escondidas. Você só paga pelo que usar, com total transparência.</p>
+      </div>
+      <div class="cs-cta">
+        <p>Entre em contato com a <strong>Kora Sistemas</strong> e descubra condições especiais para o seu negócio.</p>
+        <a href="#contato" class="btn btn-primary btn-lg">Falar com Consultor →</a>
       </div>
     </div>
   </div>
@@ -786,7 +736,7 @@
       </div>
       <div class="faq-item reveal">
         <div class="faq-q">Preciso de fidelidade ou contrato longo?<span class="ic">+</span></div>
-        <div class="faq-a"><p>Não. Você pode cancelar quando quiser, sem multas. E ainda oferecemos 7 dias grátis para você testar tudo sem compromisso.</p></div>
+        <div class="faq-a"><p>Não. Você pode cancelar quando quiser, sem multas. Sem burocracia.</p></div>
       </div>
       <div class="faq-item reveal">
         <div class="faq-q">Meus dados estão seguros?<span class="ic">+</span></div>
@@ -802,7 +752,7 @@
     <div class="cta-box reveal">
       <div class="bg-glow glow1" style="position:absolute;opacity:.2;"></div>
       <h2>Pronto para transformar<br>seu negócio?</h2>
-      <p>Junte-se a milhares de empresas que já vendem mais e gerenciam melhor com a Kora. Comece agora, é grátis por 14 dias.</p>
+      <p>Junte-se a milhares de empresas que já vendem mais e gerenciam melhor com a Kora. Agende uma demonstração e descubra.</p>
       <div class="hero-btns">
         <a href="#" class="btn btn-outline btn-lg">Agendar Demonstração</a>
       </div>
@@ -920,25 +870,29 @@
     }
   });
 
-  // Magnetic + Parallax buttons
+  // Parallax 3D + magnetic buttons
   document.querySelectorAll('.btn').forEach(btn => {
     btn.addEventListener('mousemove', e => {
       const rect = btn.getBoundingClientRect();
       const x = e.clientX - rect.left - rect.width / 2;
       const y = e.clientY - rect.top - rect.height / 2;
       const dist = Math.sqrt(x * x + y * y);
-      const maxDist = 100;
-      const strength = Math.min(dist / maxDist, 1);
-      const mx = x * 0.3 * strength;
-      const my = y * 0.3 * strength;
-      const rx = (y / rect.height) * 8;
-      const ry = -(x / rect.width) * 8;
-      btn.style.transform = `perspective(800px) translate(${mx}px, ${my}px) rotateX(${rx}deg) rotateY(${ry}deg)`;
-      btn.style.transition = 'transform .1s ease-out';
+      const maxDist = 150;
+      const strength = 1 - Math.min(dist / maxDist, 1);
+      const mx = x * 0.5 * Math.max(strength, 0.3);
+      const my = y * 0.5 * Math.max(strength, 0.3);
+      const rx = (y / rect.height) * 14;
+      const ry = -(x / rect.width) * 14;
+      const shadowX = -(x / rect.width) * 12;
+      const shadowY = -(y / rect.height) * 12;
+      btn.style.transform = `perspective(600px) translate(${mx}px, ${my}px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+      btn.style.boxShadow = `${shadowX}px ${shadowY}px 40px rgba(108,43,217,0.25)`;
+      btn.style.transition = 'transform .08s ease-out, box-shadow .08s ease-out';
     });
     btn.addEventListener('mouseleave', () => {
       btn.style.transform = '';
-      btn.style.transition = 'transform .5s cubic-bezier(.34,1.56,.64,1)';
+      btn.style.boxShadow = '';
+      btn.style.transition = 'transform .5s cubic-bezier(.34,1.56,.64,1), box-shadow .5s ease';
     });
   });
 </script>
