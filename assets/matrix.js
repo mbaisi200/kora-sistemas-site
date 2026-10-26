@@ -13,6 +13,7 @@
   if (!ctx) return;
 
   const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let reduced = motionQuery.matches;
   const theme = () => (document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark');
   const COLORS = {
     dark: { cyan: '43,232,255' },
@@ -28,6 +29,7 @@
     { size: 19, gap: 34, alpha: .24, speed: 1.25, depth: 1, glow: 3, chars: HEX + SYM }
   ];
   const FPS = 30;
+  const REDUCED_FPS = 20;
 
   let width = 0;
   let height = 0;
@@ -52,11 +54,14 @@
     ctx.textBaseline = 'middle';
 
     layers = CONFIG.map((cfg) => {
-      const count = Math.ceil(width / cfg.gap) + 1;
+      const mobile = width < 700;
+      const layerCfg = mobile ? { ...cfg, size: Math.round(cfg.size * 1.15) } : cfg;
+      const gap = Math.max(14, Math.round(cfg.gap * (mobile ? 0.8 : 1)));
+      const count = Math.ceil(width / gap) + 1;
       const columns = new Array(count);
       for (let i = 0; i < count; i++) {
         columns[i] = {
-          x: i * cfg.gap + cfg.gap / 2 + (Math.random() - 0.5) * 5,
+          x: i * gap + gap / 2 + (Math.random() - 0.5) * 5,
           y: Math.random() * height * 1.7 - height,
           speed: cfg.speed * (0.7 + Math.random() * 0.65),
           glyph: pick(cfg.chars),
@@ -64,23 +69,7 @@
           swap: 2 + ((Math.random() * 9) | 0)
         };
       }
-      return { cfg, columns };
-    });
-  }
-
-  function drawStatic() {
-    ctx.clearRect(0, 0, width, height);
-    const color = COLORS[theme()].cyan;
-    layers.forEach(({ cfg }) => {
-      ctx.font = `${cfg.size}px "JetBrains Mono", monospace`;
-      const count = Math.ceil(width / cfg.gap);
-      for (let i = 0; i < count; i++) {
-        const x = i * cfg.gap + cfg.gap / 2;
-        for (let k = 0; k < 5; k++) {
-          ctx.fillStyle = `rgba(${color},${(cfg.alpha * (0.3 + Math.random() * 0.5)).toFixed(3)})`;
-          ctx.fillText(pick(cfg.chars), x, Math.random() * height);
-        }
-      }
+      return { cfg: layerCfg, columns };
     });
   }
 
@@ -88,6 +77,7 @@
     const isLight = theme() === 'light';
     const color = COLORS[isLight ? 'light' : 'dark'].cyan;
     const boost = isLight ? 1.9 : 1;
+    const rate = reduced ? 0.45 : 1;
 
     // rastro: apaga a camada anterior sem perder a transparência do canvas
     ctx.globalCompositeOperation = 'destination-out';
@@ -125,7 +115,7 @@
           ctx.shadowBlur = 0;
         }
 
-        col.y += cfg.size * col.speed;
+        col.y += cfg.size * col.speed * rate;
 
         if (--col.swap <= 0) {
           col.glyph = pick(cfg.chars);
@@ -142,7 +132,7 @@
     }
 
     // glitch horizontal ocasional
-    if (Math.random() < 0.012) glitch = 1;
+    if (!reduced && Math.random() < 0.012) glitch = 1;
     if (glitch > 0.03) {
       const gy = Math.random() * height;
       const gw = width * (0.18 + Math.random() * 0.55);
@@ -160,7 +150,7 @@
   function frame(now) {
     loop = null;
     if (!running) return;
-    if (now - last >= 1000 / FPS) {
+    if (now - last >= 1000 / (reduced ? REDUCED_FPS : FPS)) {
       last = now;
       stroke();
     }
@@ -169,7 +159,6 @@
 
   function start() {
     running = true;
-    if (motionQuery.matches) { drawStatic(); return; }
     if (!loop) loop = requestAnimationFrame(frame);
   }
 
@@ -183,10 +172,7 @@
 
   window.addEventListener('resize', () => {
     window.clearTimeout(canvas._rz);
-    canvas._rz = window.setTimeout(() => {
-      build();
-      if (motionQuery.matches) drawStatic();
-    }, 180);
+    canvas._rz = window.setTimeout(build, 180);
   });
 
   window.addEventListener('pointermove', (event) => {
@@ -196,15 +182,10 @@
 
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) stop();
-    else if (!motionQuery.matches) start();
-  });
-
-  window.addEventListener('kora:theme', () => {
-    if (motionQuery.matches) drawStatic();
+    else start();
   });
 
   motionQuery.addEventListener?.('change', (event) => {
-    if (event.matches) { stop(); drawStatic(); }
-    else start();
+    reduced = event.matches;
   });
 })();

@@ -532,6 +532,7 @@
     let links = [];
     let visible = false;
     let loop = null;
+    let lastFrame = 0;
     let angle = 0;
     let rotX = -0.18;
     let rotY = 0;
@@ -700,14 +701,17 @@
       ctx.shadowBlur = 0;
     }
 
-    function frame() {
+    function frame(now) {
       loop = null;
       if (!visible) return;
-      if (!reduce) angle += 0.0042;
+      const t = now || performance.now();
+      const dt = lastFrame ? Math.min(48, t - lastFrame) : 16.7;
+      lastFrame = t;
+      angle += 0.0042 * (dt / 16.7) * (reduce ? 0.45 : 1);
       rotX += (targetX - rotX) * 0.055;
       rotY += (targetY - rotY) * 0.055;
       draw();
-      if (!reduce) loop = raf(frame);
+      loop = raf(frame);
     }
 
     resize();
@@ -715,8 +719,13 @@
     const obs = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         visible = entry.isIntersecting;
-        if (visible) { if (!loop) loop = raf(frame); }
-        else if (loop) { cancelAnimationFrame(loop); loop = null; }
+        if (visible) {
+          lastFrame = 0;
+          if (!loop) loop = raf(frame);
+        } else if (loop) {
+          cancelAnimationFrame(loop);
+          loop = null;
+        }
       });
     }, { threshold: 0.05 });
     obs.observe(canvas);

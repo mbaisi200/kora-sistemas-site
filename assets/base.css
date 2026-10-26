@@ -210,14 +210,13 @@ ul,ol{margin:0;padding:0;list-style:none;}
   opacity:.38;
   mix-blend-mode:screen;
   transition:opacity .5s ease;
-  contain:strict;
 }
 [data-theme="light"] .matrix-field{
-  opacity:.38;
+  opacity:.46;
   mix-blend-mode:multiply;
 }
 @media(max-width:700px){
-  .matrix-field{opacity:.36;mix-blend-mode:normal;}
+  .matrix-field{opacity:.5;mix-blend-mode:normal;}
 }
 
 /* ---------- Cabeçalho ---------- */
