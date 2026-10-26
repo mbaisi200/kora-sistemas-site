@@ -332,3 +332,16 @@
   .app-phone{display:none;}
   .stat-value{font-size:1.5rem;}
 }
+
+/* Feedback de toque */
+@media(hover:none){
+  .int-card:active,
+  .plan:active,
+  .testi:active{
+    translate:0 -3px;
+    border-color:rgba(126,200,255,.36);
+    box-shadow:0 24px 48px -36px rgba(0,0,0,.95);
+  }
+  .faq-q:active{background:rgba(43,232,255,.05);}
+  .contact-mail:active{color:var(--text);}
+}

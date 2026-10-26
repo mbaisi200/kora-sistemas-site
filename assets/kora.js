@@ -208,7 +208,7 @@
     });
   });
 
-  /* ---------------- Tilt 3D + spotlight ---------------- */
+  /* ---------------- Tilt 3D ---------------- */
   if (!isTouch && !reduce) {
     $$('[data-tilt]').forEach((el) => {
       const strength = parseFloat(el.dataset.tilt) || 6;
@@ -239,6 +239,33 @@
         el.style.setProperty('--ry', '0deg');
       });
     });
+  }
+
+  /* Em telas de toque, o 3D acompanha a rolagem (sem hover) */
+  if (isTouch && !reduce) {
+    const tiltEls = $$('[data-tilt]');
+    let frame = null;
+
+    const updateScrollTilt = () => {
+      const vh = window.innerHeight || 1;
+      tiltEls.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.bottom < -140 || rect.top > vh + 140) return;
+        const progress = Math.max(-0.85, Math.min(0.85, (rect.top + rect.height / 2 - vh / 2) / vh));
+        const strength = parseFloat(el.dataset.tilt) || 4;
+        el.style.setProperty('--rx', `${(progress * strength * 1.6).toFixed(2)}deg`);
+        el.style.setProperty('--ry', `${(-progress * strength * 1.0).toFixed(2)}deg`);
+      });
+    };
+
+    const scheduleTilt = () => {
+      if (frame) return;
+      frame = raf(() => { frame = null; updateScrollTilt(); });
+    };
+
+    window.addEventListener('scroll', scheduleTilt, { passive: true });
+    window.addEventListener('resize', scheduleTilt);
+    updateScrollTilt();
   }
 
   /* ---------------- Botões magnéticos ---------------- */
@@ -354,19 +381,68 @@
       });
     }
 
+    // No toque, o ecossistema se apresenta sozinho
+    let cycleTimer = null;
+    let resumeTimer = null;
+    let cycleIndex = -1;
+    let hubVisible = true;
+    let hubPaused = false;
+    const hubKeys = Object.keys(HUB_DATA);
+
+    const stopCycle = () => {
+      window.clearInterval(cycleTimer);
+      cycleTimer = null;
+    };
+    const startCycle = () => {
+      if (!isTouch || reduce || hubPaused || !hubVisible || cycleTimer) return;
+      cycleTimer = window.setInterval(() => {
+        cycleIndex = (cycleIndex + 1) % hubKeys.length;
+        setHubData(hubKeys[cycleIndex]);
+      }, 5200);
+    };
+    const pauseCycle = () => {
+      if (!isTouch) return;
+      stopCycle();
+      hubPaused = true;
+      window.clearTimeout(resumeTimer);
+      resumeTimer = window.setTimeout(() => {
+        hubPaused = false;
+        startCycle();
+      }, 14000);
+    };
+
     nodes.forEach((node) => {
       const key = node.dataset.hub;
-      node.addEventListener('pointerenter', () => setHubData(key));
-      node.addEventListener('focus', () => setHubData(key));
-      node.addEventListener('click', () => setHubData(key));
+      const activate = () => {
+        setHubData(key);
+        pauseCycle();
+      };
+      node.addEventListener('pointerenter', activate);
+      node.addEventListener('focus', activate);
+      node.addEventListener('click', activate);
     });
 
     const layout = () => {
       buildHubPaths();
-      if (window.innerWidth <= 720) setHubData('pdv');
+      if (window.innerWidth <= 720) {
+        setHubData('pdv');
+        cycleIndex = 0;
+      }
     };
     hubLayout = layout;
     layout();
+
+    if ('IntersectionObserver' in window) {
+      const hubObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          hubVisible = entry.isIntersecting;
+          if (hubVisible) startCycle();
+          else stopCycle();
+        });
+      }, { threshold: 0.25 });
+      hubObserver.observe(hub);
+    }
+
     window.addEventListener('resize', () => {
       window.clearTimeout(hubLayout._t);
       hubLayout._t = window.setTimeout(layout, 140);
@@ -646,10 +722,15 @@
     obs.observe(canvas);
 
     stage?.addEventListener('pointermove', (event) => {
-      if (event.pointerType !== 'mouse' || reduce) return;
+      if (reduce) return;
       const rect = stage.getBoundingClientRect();
-      targetY = ((event.clientX - rect.left) / rect.width - 0.5) * 0.85;
-      targetX = -0.18 + ((event.clientY - rect.top) / rect.height - 0.5) * 0.42;
+      if (event.pointerType === 'mouse') {
+        targetY = ((event.clientX - rect.left) / rect.width - 0.5) * 0.85;
+        targetX = -0.18 + ((event.clientY - rect.top) / rect.height - 0.5) * 0.42;
+      } else if (event.pointerType === 'touch') {
+        targetY = ((event.clientX - rect.left) / rect.width - 0.5) * 1.15;
+        targetX = -0.18 + ((event.clientY - rect.top) / rect.height - 0.5) * 0.5;
+      }
     });
     stage?.addEventListener('pointerleave', () => {
       targetX = -0.18;

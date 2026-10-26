@@ -190,6 +190,11 @@
 }
 .hub-node:hover .ico,.hub-node.is-active .ico{transform:scale(1.15);}
 .hub-node:focus-visible{outline-offset:4px;}
+.hub-node.is-active .ico{animation:nodePulse 2.2s ease-in-out infinite;}
+@keyframes nodePulse{
+  0%,100%{transform:scale(1);filter:none;}
+  50%{transform:scale(1.16);filter:drop-shadow(0 0 6px var(--cyan));}
+}
 
 .hub-panel{
   position:relative;
@@ -428,4 +433,21 @@
   .holo{padding:16px;}
   .donut-lg{width:104px;}
   .bars-mini{height:56px;}
+}
+
+/* Feedback de toque */
+@media(hover:none){
+  .fcard{--brx:2deg;--bry:-1.5deg;}
+  .fcard:active{
+    translate:0 -3px;
+    border-color:rgba(126,200,255,.4);
+    box-shadow:0 26px 55px -38px rgba(0,0,0,.95);
+  }
+  .fcard:active::after{opacity:1;}
+  .fcard:active .fcard-icon{transform:scale(1.05);box-shadow:0 0 34px -6px rgba(43,232,255,.7);}
+  .hub-node:active{
+    border-color:rgba(43,232,255,.6);
+    background:var(--card-hover);
+  }
+  .module-visual:active{border-color:rgba(126,200,255,.3);}
 }
