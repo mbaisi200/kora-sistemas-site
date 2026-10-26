@@ -4,30 +4,45 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contrato de Prestação de Serviços | Kora Software</title>
+<meta name="theme-color" content="#04070F">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="assets/kora-mark.png" type="image/png">
+<script>
+  (function () {
+    try {
+      if (localStorage.getItem('kora-theme') === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    } catch (e) {}
+  })();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --primary:#6C2BD9;
-    --primary-light:#9333EA;
-    --accent:#00E0C7;
-    --accent-2:#FF6B9D;
-    --dark:#0B0118;
-    --dark-2:#150327;
-    --gray:#9CA3AF;
-    --light:#F8F7FC;
+    --primary:#2F7BFF;
+    --primary-light:#2BE8FF;
+    --accent:#2BE8FF;
+    --accent-2:#FF6FA8;
+    --dark:#04070F;
+    --dark-2:#0A1426;
+    --gray:#93A6C4;
+    --light:#EAF2FF;
     --card:rgba(255,255,255,0.04);
-    --border:rgba(255,255,255,0.1);
-    --gradient:linear-gradient(135deg,#6C2BD9 0%,#9333EA 50%,#00E0C7 100%);
+    --border:rgba(126,190,255,0.16);
+    --grid:rgba(120,180,255,0.055);
+    --gradient:linear-gradient(115deg,#2F7BFF 0%,#2BE8FF 55%,#8B5CFF 100%);
   }
   [data-theme="light"]{
-    --dark:#f5f5f7;
+    --dark:#EEF4FE;
     --dark-2:#fff;
-    --gray:#6b7280;
-    --light:#1a1a2e;
-    --card:#fff;
-    --border:rgba(0,0,0,0.08);
-    --accent:#0d9488;
+    --gray:#4C5F7C;
+    --light:#071427;
+    --card:rgba(9,32,66,0.035);
+    --border:rgba(9,44,96,0.14);
+    --accent:#0B8FBE;
+    --primary:#175FE0;
+    --grid:rgba(20,70,140,0.075);
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   body{
@@ -155,14 +170,155 @@
     .header-bar{padding:16px 0;}
     .contract-wrap{padding:32px 0;}
   }
+
+  /* ===== Identidade visual Kora "Núcleo" ===== */
+  body{
+    background:
+      radial-gradient(900px 520px at 88% -8%,rgba(47,123,255,.18),transparent 62%),
+      radial-gradient(700px 420px at 0% 2%,rgba(139,92,255,.14),transparent 60%),
+      var(--dark);
+    min-height:100vh;
+  }
+  [data-theme="light"] body{
+    background:
+      radial-gradient(900px 520px at 88% -8%,rgba(23,95,224,.14),transparent 62%),
+      radial-gradient(700px 420px at 0% 2%,rgba(108,67,224,.1),transparent 60%),
+      var(--dark);
+  }
+  body::before{
+    content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(var(--grid) 1px,transparent 1px),
+      linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:56px 56px;
+    -webkit-mask-image:radial-gradient(ellipse 80% 50% at 50% 0%,#000,transparent 75%);
+    mask-image:radial-gradient(ellipse 80% 50% at 50% 0%,#000,transparent 75%);
+    opacity:.75;
+  }
+  .container{position:relative;z-index:1;}
+  ::selection{background:rgba(43,232,255,.28);color:#fff;}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  .header-bar{
+    padding:20px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .logo{display:flex;align-items:center;gap:11px;text-decoration:none;}
+  .logo-mark{
+    width:42px;height:42px;border-radius:12px;overflow:hidden;flex-shrink:0;
+    background:#fff;
+    box-shadow:0 0 0 1px rgba(126,200,255,.22),0 10px 26px -10px rgba(43,232,255,.6);
+  }
+  .logo-mark img{width:100%;height:100%;object-fit:cover;display:block;}
+  .logo-text{
+    display:flex;flex-direction:column;line-height:1;
+    font-family:'Sora',sans-serif;font-weight:800;font-size:1.3rem;
+    letter-spacing:-.02em;color:var(--light);
+  }
+  .logo-text small{
+    font-family:'Inter',sans-serif;font-size:.5rem;font-weight:600;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--accent);
+    margin-top:6px;
+  }
+  .theme-toggle{
+    width:38px;height:38px;border-radius:11px;
+    background:var(--card);border:1px solid var(--border);
+    color:var(--light);font-size:1rem;
+  }
+  .theme-toggle:hover{background:rgba(126,200,255,.09);border-color:rgba(126,200,255,.35);}
+  .contract-wrap{padding:54px 0 72px;}
+  .contract-box{
+    background:linear-gradient(170deg,rgba(255,255,255,.05),rgba(255,255,255,.012)),rgba(7,15,28,.94);
+    border:1px solid var(--border);
+    border-radius:26px;
+    box-shadow:0 50px 120px -70px rgba(0,0,0,.95);
+    position:relative;
+    overflow:hidden;
+  }
+  .contract-box::before{
+    content:'';position:absolute;top:0;left:32px;right:32px;height:1px;
+    background:linear-gradient(90deg,transparent,var(--accent),transparent);
+    opacity:.55;
+  }
+  [data-theme="light"] .contract-box{background:#fff;}
+  .contract-header h1{letter-spacing:-.02em;}
+  .contract-header p{
+    font-family:'Inter',sans-serif;font-size:.72rem;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--gray);
+  }
+  .contract-body h2{
+    font-size:1.06rem;letter-spacing:.01em;
+    border-bottom:1px solid var(--border);
+    color:var(--light);
+  }
+  .contract-body .highlight{color:var(--accent);}
+  .form-group label{
+    font-size:.68rem;font-weight:600;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--gray);
+  }
+  .form-group input,.form-group select{
+    border-radius:10px;
+    background:rgba(255,255,255,.03);
+    transition:border-color .25s ease,box-shadow .25s ease,background .25s ease;
+  }
+  [data-theme="light"] .form-group input,
+  [data-theme="light"] .form-group select{background:#F8FBFF;}
+  .form-group input::placeholder{color:var(--gray);opacity:.65;}
+  .form-group input:focus,.form-group select:focus{
+    border-color:rgba(43,232,255,.55);
+    box-shadow:0 0 0 3px rgba(43,232,255,.12);
+    background:rgba(43,232,255,.04);
+  }
+  .checkbox-group input[type="checkbox"]{accent-color:var(--primary);}
+  .checkbox-group label a{color:var(--accent);}
+  .btn{
+    border-radius:12px;
+    background:linear-gradient(115deg,#7CF4FF 0%,#2BE8FF 42%,#4B9BFF 100%);
+    color:#00121F;
+    font-weight:700;
+    letter-spacing:.01em;
+    box-shadow:0 14px 34px -14px rgba(43,232,255,.8),inset 0 1px 0 rgba(255,255,255,.5);
+  }
+  .btn-primary:hover{
+    transform:translateY(-2px);
+    box-shadow:0 20px 44px -14px rgba(43,232,255,.95),inset 0 1px 0 rgba(255,255,255,.6);
+  }
+  .btn-primary:disabled{filter:grayscale(.35);opacity:.55;}
+  .sig-display{
+    background:rgba(255,255,255,.03);
+    border-radius:14px;
+  }
+  [data-theme="light"] .sig-display{background:#F4F9FF;}
+  .sig-display .sig-value{color:var(--accent);}
+  .signature-area{border-top:1px solid var(--border);}
+  .signature-area h2{letter-spacing:-.01em;}
+  .toast{border-radius:12px;border:1px solid rgba(43,227,164,.35);background:#062A20;}
+  .contract-footer{
+    display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;
+    padding:0 24px 48px;color:var(--gray);font-size:.78rem;
+  }
+  .contract-footer a{color:var(--accent);font-weight:600;}
+  .contract-footer a:hover{text-decoration:underline;}
+  .matrix-field{
+    position:fixed;inset:0;z-index:0;
+    width:100%;height:100%;
+    pointer-events:none;
+    opacity:.2;
+    mix-blend-mode:screen;
+    contain:strict;
+  }
+  [data-theme="light"] .matrix-field{opacity:.18;mix-blend-mode:multiply;}
 </style>
+<link rel="stylesheet" href="assets/cursor.css">
 </head>
 <body>
 
+<canvas class="matrix-field" id="matrixField" aria-hidden="true"></canvas>
+
 <div class="container">
   <div class="header-bar">
-    <a href="index.html" class="logo" style="text-decoration:none;color:var(--light);">
-      Kora<span style="color:var(--accent)">.</span>
+    <a href="index.html" class="logo">
+      <span class="logo-mark"><img src="assets/kora-mark.png" alt="" width="42" height="42"></span>
+      <span class="logo-text">Kora<small>Sistemas de Gestão</small></span>
     </a>
     <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">🌙</button>
   </div>
@@ -322,24 +478,30 @@
   </div>
 </section>
 
+<footer class="contract-footer container">
+  <span>© 2026 Kora Software Tecnologia Ltda. — Contrato de Prestação de Serviços</span>
+  <a href="index.html">← Voltar ao site</a>
+</footer>
+
 <script>
-  // Theme toggle
+  // Theme toggle (padrão: escuro; respeita a escolha do visitante)
   const themeToggle = document.getElementById('themeToggle');
   const html = document.documentElement;
-  const saved = localStorage.getItem('theme');
+  const saved = (() => { try { return localStorage.getItem('kora-theme'); } catch (e) { return null; } })();
   if (saved === 'light') html.setAttribute('data-theme', 'light');
   themeToggle.textContent = html.getAttribute('data-theme') === 'light' ? '☀️' : '🌙';
   themeToggle.addEventListener('click', () => {
     const isLight = html.getAttribute('data-theme') === 'light';
     if (isLight) {
       html.removeAttribute('data-theme');
-      localStorage.setItem('theme', 'dark');
+      try { localStorage.setItem('kora-theme', 'dark'); } catch (e) {}
       themeToggle.textContent = '🌙';
     } else {
       html.setAttribute('data-theme', 'light');
-      localStorage.setItem('theme', 'light');
+      try { localStorage.setItem('kora-theme', 'light'); } catch (e) {}
       themeToggle.textContent = '☀️';
     }
+    window.dispatchEvent(new CustomEvent('kora:theme', { detail: html.getAttribute('data-theme') === 'light' ? 'light' : 'dark' }));
   });
 
   // Form validation
@@ -429,5 +591,7 @@
       });
   });
 </script>
+<script src="assets/cursor.js" defer></script>
+<script src="assets/matrix.js" defer></script>
 </body>
 </html>
